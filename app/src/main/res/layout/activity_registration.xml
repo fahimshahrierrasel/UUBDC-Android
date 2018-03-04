@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="io.github.treebricks.uubdc.RegistrationActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarReg"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="@string/register_donor_title"
@@ -15,7 +15,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
+        android:layout_marginTop="?attr/actionBarSize">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

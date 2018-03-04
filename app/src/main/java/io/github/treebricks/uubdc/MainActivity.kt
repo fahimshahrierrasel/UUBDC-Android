@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
         val activityToolbar = toolbar
 
         // Initialize the material drawer
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             }
             primaryItem("Search Donor"){
                 onClick { _ ->
-
+                    startActivity(Intent(this@MainActivity, SearchActivity::class.java))
                     false
                 }
             }

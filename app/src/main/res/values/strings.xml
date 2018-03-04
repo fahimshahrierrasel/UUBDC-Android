@@ -8,4 +8,6 @@
     <string name="area">Area</string>
     <string name="register">Register</string>
     <string name="last_donation_date">Last Donation Date</string>
+    <string name="search">Search</string>
+    <string name="search_text">Search Text</string>
 </resources>

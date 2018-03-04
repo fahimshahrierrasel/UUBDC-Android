@@ -10,4 +10,10 @@
         <item>O+</item>
         <item>O-</item>
     </string-array>
+    <string-array name="search_options">
+        <item>Blood Group</item>
+        <item>Name</item>
+        <item>Mobile No</item>
+        <item>Area</item>
+    </string-array>
 </resources>

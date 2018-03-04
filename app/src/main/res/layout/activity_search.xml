@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="io.github.treebricks.uubdc.SearchActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarSrch"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:title="Search Donor"
+        app:titleTextColor="@color/md_white_1000" />
+
+    <EditText
+        android:id="@+id/etSearchText"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_bg"
+        android:ems="10"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:hint="@string/search_text"
+        android:inputType="none|text"
+        android:labelFor="@+id/sSearchOption"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/rv_Donor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSrch" />
+
+    <Spinner
+        android:id="@+id/sSearchOption"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/search_options"
+        app:layout_constraintBottom_toTopOf="@+id/rv_Donor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etSearchText"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarSrch" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_Donor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearchText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
