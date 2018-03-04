@@ -1,9 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="io.github.treebricks.uubdc.RegistrationActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/register_donor_title"
+        app:titleTextColor="@color/md_white_1000"
+        android:background="@color/primary"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/donor_name"/>
 
-</android.support.constraint.ConstraintLayout>
+            <EditText
+                android:id="@+id/etDonorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:ems="10"
+                android:hint="@string/donor_name"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/textView"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_below="@id/etDonorName"
+                android:text="@string/email"/>
+
+            <EditText
+                android:id="@+id/etDonorEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:ems="10"
+                android:hint="@string/email"
+                android:layout_below="@id/textView2"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/etDonorEmail"
+                android:layout_below="@+id/etDonorEmail"
+                android:text="@string/mobile_no" />
+
+            <EditText
+                android:id="@+id/etMobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@+id/textView3"
+                android:ems="10"
+                android:hint="@string/mobile_no"
+                android:labelFor="@id/etMobileNo"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/etMobileNo"
+                android:layout_below="@+id/etMobileNo"
+                android:text="@string/blood_group" />
+
+            <Spinner
+                android:id="@+id/sBloodGroup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@+id/textView4"
+                android:prompt="@string/blood_group"
+                android:entries="@array/blood_groups"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/sBloodGroup"
+                android:layout_below="@+id/sBloodGroup"
+                android:text="@string/area" />
+
+            <EditText
+                android:id="@+id/etArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@+id/textView5"
+                android:ems="10"
+                android:hint="@string/area"/>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/sBloodGroup"
+                android:layout_below="@+id/etArea"
+                android:text="@string/last_donation_date" />
+
+            <EditText
+                android:id="@+id/etLastDonationDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@+id/textView6"
+                android:ems="10"
+                android:inputType="date"
+                android:focusable="false"
+                android:longClickable="false"
+                android:hint="@string/last_donation_date"/>
+
+            <Button
+                android:id="@+id/bRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/etLastDonationDate"
+                android:layout_below="@+id/etLastDonationDate"
+                android:layout_marginTop="15dp"
+                android:text="@string/register" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

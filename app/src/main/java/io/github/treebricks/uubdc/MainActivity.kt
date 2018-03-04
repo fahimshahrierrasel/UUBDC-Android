@@ -1,5 +1,6 @@
 package io.github.treebricks.uubdc
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import co.zsmb.materialdrawerkt.builders.accountHeader
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val activityToolbar = toolbar
+
         // Initialize the material drawer
         drawer {
             toolbar = activityToolbar
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             }
             primaryItem("Add Donor"){
                 onClick { _ ->
-
+                    startActivity(Intent(this@MainActivity, RegistrationActivity::class.java))
                     false
                 }
             }
@@ -38,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
-
             footer {
                 primaryItem("About"){
                     onClick { _ ->
