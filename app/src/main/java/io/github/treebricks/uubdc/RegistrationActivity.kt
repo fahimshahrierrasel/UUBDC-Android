@@ -84,10 +84,7 @@ class RegistrationActivity : AppCompatActivity() {
             if(validationFlag)
             {
                 val newDonor = Donor(donorName, donorEmail, donorMobile, bloodGroup, area,
-                        lastDonationDate, emptyList())
-
-//                val donorMap = HashMap<String, Donor>()
-//                donorMap.put("dono")
+                        lastDonationDate, null)
 
                 db.collection("donors")
                         .add(newDonor)
