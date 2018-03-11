@@ -105,4 +105,5 @@
     <string name="delete">Delete</string>
     <string name="demo_blood_group">AB+</string>
     <string name="demo_date">31-12-2999</string>
+    <string name="select_blood_group">Blood Group</string>
 </resources>

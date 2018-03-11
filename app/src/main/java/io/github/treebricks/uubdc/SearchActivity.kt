@@ -66,7 +66,7 @@ class SearchActivity : AppCompatActivity() {
         /**
          * Search option selection changed event
          */
-        sSearchOption.onItemSelectedListener = object : OnItemSelectedListener {
+        sGroupSelection.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, item: View, position: Int, id: Long) {
                 when (position)
                 {
@@ -145,8 +145,8 @@ class SearchActivity : AppCompatActivity() {
      */
     private fun initializeRecyclerView(donors: ArrayList<Donor>) {
         val donorAdapter = DonorAdapter(this@SearchActivity, donors)
-        rv_Donor.adapter = donorAdapter
-        rv_Donor.layoutManager = LinearLayoutManager(this)
+        rv_donor.adapter = donorAdapter
+        rv_donor.layoutManager = LinearLayoutManager(this)
     }
 }
 

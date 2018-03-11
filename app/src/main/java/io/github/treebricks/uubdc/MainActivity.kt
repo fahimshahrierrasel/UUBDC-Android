@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
             primaryItem("Available Donor"){
                 onClick { _ ->
-                    startActivity(Intent(this@MainActivity, DonorDetailsActivity::class.java))
+                    startActivity(Intent(this@MainActivity, AvailableDonorActivity::class.java))
                     false
                 }
             }

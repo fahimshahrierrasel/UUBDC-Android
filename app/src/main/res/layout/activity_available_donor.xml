@@ -4,36 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context="io.github.treebricks.uubdc.SearchActivity">
+    tools:context="io.github.treebricks.uubdc.AvailableDonorActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarSrch"
+        android:id="@+id/toolbarAvailable"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
-        app:title="Search Donor"
+        app:title="Available Donor"
         app:titleTextColor="@color/md_white_1000" />
 
-    <EditText
-        android:id="@+id/etSearchText"
+    <TextView
+        android:id="@+id/tvSearchMsg"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/edit_text_bg"
-        android:ems="10"
-        android:hint="@string/search_text"
-        android:inputType="textNoSuggestions|textFilter"
-        android:labelFor="@+id/sGroupSelection"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
-        android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/rv_donor"
+        android:textColor="@color/md_black_1000"
+        android:text="@string/select_blood_group"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/rv_available_donor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSrch" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarAvailable" />
 
     <Spinner
         android:id="@+id/sGroupSelection"
@@ -44,20 +39,19 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:entries="@array/search_options"
-        app:layout_constraintBottom_toTopOf="@+id/rv_donor"
+        android:entries="@array/blood_groups"
+        app:layout_constraintBottom_toTopOf="@+id/rv_available_donor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etSearchText"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSrch" />
+        app:layout_constraintStart_toEndOf="@+id/tvSearchMsg"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarAvailable"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_donor"
+        android:id="@+id/rv_available_donor"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etSearchText"
+        app:layout_constraintTop_toBottomOf="@id/tvSearchMsg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>
