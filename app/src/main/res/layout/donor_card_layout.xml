@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/md_blue_grey_50">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvDonorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/donor_name"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvBloodGroupTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDonorName"
+            android:text="@string/blood_group"/>
+
+        <TextView
+            android:id="@+id/tvBloodGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBloodGroupTitle"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="0dp"
+            android:text="@string/demo_blood_group"/>
+        <TextView
+            android:id="@+id/tvLastDonationDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tvDonorName"
+            android:text="@string/last_donation_date"/>
+
+        <TextView
+            android:id="@+id/tvLastDonationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/tvLastDonationDateTitle"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="0dp"
+            android:layout_below="@+id/tvLastDonationDateTitle"
+            android:text="@string/demo_date"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
