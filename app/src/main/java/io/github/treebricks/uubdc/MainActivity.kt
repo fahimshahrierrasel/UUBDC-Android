@@ -34,18 +34,21 @@ class MainActivity : AppCompatActivity() {
                 background = R.drawable.header
             }
             primaryItem("Add Donor"){
+                icon = R.drawable.ic_person_add_black_24dp
                 onClick { _ ->
                     startActivity(Intent(this@MainActivity, RegistrationActivity::class.java))
                     false
                 }
             }
             primaryItem("Search Donor"){
+                icon = R.drawable.ic_search_black_24dp
                 onClick { _ ->
                     startActivity(Intent(this@MainActivity, SearchActivity::class.java))
                     false
                 }
             }
             primaryItem("Available Donor"){
+                icon = R.drawable.ic_people_black_24dp
                 onClick { _ ->
                     startActivity(Intent(this@MainActivity, AvailableDonorActivity::class.java))
                     false
@@ -53,12 +56,14 @@ class MainActivity : AppCompatActivity() {
             }
             footer {
                 primaryItem("Settings"){
+                    icon = R.drawable.ic_settings_black_24dp
                     onClick { _ ->
                         startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
                         false
                     }
                 }
                 primaryItem("About"){
+                    icon = R.drawable.ic_info_outline_black_24dp
                     onClick { _ ->
 
                         false
