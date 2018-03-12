@@ -52,6 +52,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             footer {
+                primaryItem("Settings"){
+                    onClick { _ ->
+                        startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+                        false
+                    }
+                }
                 primaryItem("About"){
                     onClick { _ ->
 

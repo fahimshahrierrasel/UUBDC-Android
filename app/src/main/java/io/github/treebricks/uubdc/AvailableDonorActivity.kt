@@ -13,18 +13,23 @@ import kotlinx.android.synthetic.main.activity_available_donor.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
+import android.preference.PreferenceManager
 
 class AvailableDonorActivity : AppCompatActivity() {
 
     private val mDocRef = FirebaseFirestore.getInstance()
     private var donors: ArrayList<Donor>? = null
+    private var dayDifference = 80
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_available_donor)
         setSupportActionBar(toolbarAvailable)
 
         donors = ArrayList()
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        dayDifference = Integer.parseInt(prefs.getString("donation_frequency", "80"))
 
         /**
          * Fetch the Documents from FireStore database
@@ -63,8 +68,9 @@ class AvailableDonorActivity : AppCompatActivity() {
 
     private fun searchDonors(searchText: String) {
         val filteredDonor = ArrayList<Donor>()
+
         donors!!.forEach { donor ->
-            if( donationDateDifference(donor.LastDonationDate!!) > 80 && donor.BloodGroup == searchText)
+            if( donationDateDifference(donor.LastDonationDate!!) > dayDifference && donor.BloodGroup == searchText)
                 filteredDonor.add(donor)
         }
         initializeRecyclerView(filteredDonor)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="donation_frequency"
+        android:title="Donation Frequency"
+        android:summary="Day difference between two donation"
+        android:defaultValue="80"
+        android:dialogTitle="Donation Frequency" />
+</PreferenceScreen>
