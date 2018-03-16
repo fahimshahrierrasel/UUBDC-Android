@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val mDocRef = FirebaseFirestore.getInstance()
-    var donors: ArrayList<Donor>? = null
+    private val mDocRef = FirebaseFirestore.getInstance()
+    private var donors: ArrayList<Donor>? = null
 
     private val TAG = "MainActivity"
 
@@ -81,15 +81,17 @@ class MainActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         for (document in task.result) {
                             val adonor = Donor(
+                                    Id = document.get("id").toString(),
                                     DonorName = document.get("donorName").toString(),
                                     MobileNo = document.get("mobileNo").toString(),
                                     Area = document.get("area").toString(),
                                     BloodGroup = document.get("bloodGroup").toString(),
                                     LastDonationDate = document.get("lastDonationDate").toString(),
                                     Email = document.get("email").toString(),
-                                    Donations = null
+                                    TotalDonation = document.get("totalDonation").toString().toInt()
                             )
                             donors?.add(adonor)
+                            println(document.id)
                         }
                         val donorAdapter = DonorAdapter(this@MainActivity, donors!!)
                         rvAllDonors.adapter = donorAdapter

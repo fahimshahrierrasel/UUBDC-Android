@@ -3,17 +3,14 @@ package io.github.treebricks.uubdc
 import android.app.DatePickerDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestore
-import io.github.treebricks.uubdc.Models.Donation
 import io.github.treebricks.uubdc.Models.Donor
-import java.time.LocalDate
-import kotlin.collections.HashMap
+import kotlin.collections.ArrayList
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -83,8 +80,9 @@ class RegistrationActivity : AppCompatActivity() {
 
             if(validationFlag)
             {
-                val newDonor = Donor(donorName, donorEmail, donorMobile, bloodGroup, area,
-                        lastDonationDate, null)
+
+                val newDonor = Donor(UUID.randomUUID().toString(), donorName, donorEmail, donorMobile, bloodGroup, area,
+                        lastDonationDate, 1)
 
                 db.collection("donors")
                         .add(newDonor)

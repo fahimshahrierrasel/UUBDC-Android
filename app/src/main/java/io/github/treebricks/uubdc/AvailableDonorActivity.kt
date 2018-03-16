@@ -40,13 +40,14 @@ class AvailableDonorActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         for (document in task.result) {
                             val donor = Donor(
+                                    Id = document.get("id").toString(),
                                     DonorName = document.get("donorName").toString(),
                                     MobileNo = document.get("mobileNo").toString(),
                                     Area = document.get("area").toString(),
                                     BloodGroup = document.get("bloodGroup").toString(),
                                     LastDonationDate = document.get("lastDonationDate").toString(),
                                     Email = document.get("email").toString(),
-                                    Donations = null
+                                    TotalDonation = document.get("totalDonation").toString().toInt()
                             )
                             donors?.add(donor)
                         }
