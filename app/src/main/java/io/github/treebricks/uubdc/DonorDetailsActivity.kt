@@ -96,7 +96,7 @@ class DonorDetailsActivity : AppCompatActivity() {
                                 .title("New Donation Date")
                                 .content("New donation date for the donor. (dd-mm-yyyy)")
                                 .inputType(InputType.TYPE_CLASS_DATETIME)
-                                .input("Donation Date", dateString, { dialog, input ->
+                                .input("Donation Date", dateString, { _, input ->
                                     donorsRef.document(documentId!!)
                                             .set(Donor(
                                                     Id = donor!!.Id,
@@ -179,11 +179,21 @@ class DonorDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.action_delete -> {
-
+                donorsRef.document(documentId!!).delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(this@DonorDetailsActivity, "Donor Deleted :(", Toast.LENGTH_SHORT).show()
+                            finish()
+                            startActivity(Intent(this@DonorDetailsActivity, MainActivity::class.java))
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this@DonorDetailsActivity, "Donor deletion failed :(", Toast.LENGTH_SHORT).show()
+                        }
                 true
             }
             R.id.action_edit -> {
-
+                val intent = Intent(this@DonorDetailsActivity, UpdateActivity::class.java)
+                intent.putExtra("DONOR_ID", donor!!.Id)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

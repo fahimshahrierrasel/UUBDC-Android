@@ -11,6 +11,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         setSupportActionBar(toolbarSettings)
+        toolbarSettings.title = "Settings"
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }

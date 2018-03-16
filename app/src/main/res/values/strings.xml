@@ -25,4 +25,6 @@
     <string name="select_blood_group">Blood Group</string>
     <string name="total_donation">Total Donation</string>
     <string name="total_donation_plc">Total Donation: %1$s</string>
+    <string name="update_donor">Update Donor</string>
+    <string name="update">Update</string>
 </resources>

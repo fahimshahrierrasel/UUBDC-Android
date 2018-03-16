@@ -89,6 +89,7 @@ class RegistrationActivity : AppCompatActivity() {
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG, "Document Snapshot add with ID: " + documentReference.id)
                             Toast.makeText(this@RegistrationActivity, "Donor registration successfully!", Toast.LENGTH_SHORT).show()
+                            finish()
                         }.addOnFailureListener { exception ->
                             Log.w(TAG, "Error adding Document: ", exception)
                             Toast.makeText(this@RegistrationActivity, "Donor registration failed!", Toast.LENGTH_SHORT).show()
