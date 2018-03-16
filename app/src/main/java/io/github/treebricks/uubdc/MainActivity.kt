@@ -30,24 +30,24 @@ class MainActivity : AppCompatActivity() {
         // Initialize the material drawer
         drawer {
             toolbar = activityToolbar
-            accountHeader{
+            accountHeader {
                 background = R.drawable.header
             }
-            primaryItem("Add Donor"){
+            primaryItem("Add Donor") {
                 icon = R.drawable.ic_person_add_black_24dp
                 onClick { _ ->
                     startActivity(Intent(this@MainActivity, RegistrationActivity::class.java))
                     false
                 }
             }
-            primaryItem("Search Donor"){
+            primaryItem("Search Donor") {
                 icon = R.drawable.ic_search_black_24dp
                 onClick { _ ->
                     startActivity(Intent(this@MainActivity, SearchActivity::class.java))
                     false
                 }
             }
-            primaryItem("Available Donor"){
+            primaryItem("Available Donor") {
                 icon = R.drawable.ic_people_black_24dp
                 onClick { _ ->
                     startActivity(Intent(this@MainActivity, AvailableDonorActivity::class.java))
@@ -55,14 +55,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             footer {
-                primaryItem("Settings"){
+                primaryItem("Settings") {
                     icon = R.drawable.ic_settings_black_24dp
                     onClick { _ ->
                         startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
                         false
                     }
                 }
-                primaryItem("About"){
+                primaryItem("About") {
                     icon = R.drawable.ic_info_outline_black_24dp
                     onClick { _ ->
 
@@ -74,31 +74,44 @@ class MainActivity : AppCompatActivity() {
 
         donors = ArrayList()
 
-        // Firestore data fetch
+        getAllDonors()
+
+        swipeContainer.setOnRefreshListener {
+            getAllDonors()
+        }
+    }
+
+    private fun getAllDonors() {
         mDocRef.collection("donors")
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        for (document in task.result) {
-                            val adonor = Donor(
-                                    Id = document.get("id").toString(),
-                                    DonorName = document.get("donorName").toString(),
-                                    MobileNo = document.get("mobileNo").toString(),
-                                    Area = document.get("area").toString(),
-                                    BloodGroup = document.get("bloodGroup").toString(),
-                                    LastDonationDate = document.get("lastDonationDate").toString(),
-                                    Email = document.get("email").toString(),
-                                    TotalDonation = document.get("totalDonation").toString().toInt()
+                        donors?.clear()
+                        task.result.map {
+                            Donor(
+                                    Id = it.get("id").toString(),
+                                    DonorName = it.get("donorName").toString(),
+                                    MobileNo = it.get("mobileNo").toString(),
+                                    Area = it.get("area").toString(),
+                                    BloodGroup = it.get("bloodGroup").toString(),
+                                    LastDonationDate = it.get("lastDonationDate").toString(),
+                                    Email = it.get("email").toString(),
+                                    TotalDonation = it.get("totalDonation").toString().toInt()
                             )
-                            donors?.add(adonor)
-                            println(document.id)
+                        }.forEach {
+                            donors?.add(it)
                         }
-                        val donorAdapter = DonorAdapter(this@MainActivity, donors!!)
-                        rvAllDonors.adapter = donorAdapter
-                        rvAllDonors.layoutManager = LinearLayoutManager(this)
+                        initializeRecyclerView(donors!!)
                     } else {
                         Log.w(TAG, "Error getting documents.", task.exception)
                     }
+                    swipeContainer.isRefreshing = false
                 }
+    }
+
+    private fun initializeRecyclerView(donors: ArrayList<Donor>) {
+        val donorAdapter = DonorAdapter(this@MainActivity, donors)
+        rvAllDonors.adapter = donorAdapter
+        rvAllDonors.layoutManager = LinearLayoutManager(this)
     }
 }

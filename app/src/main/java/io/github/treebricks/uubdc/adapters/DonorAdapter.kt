@@ -1,5 +1,6 @@
 package io.github.treebricks.uubdc.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.CardView

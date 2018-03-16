@@ -38,31 +38,11 @@ class SearchActivity : AppCompatActivity() {
 
         donors = ArrayList()
 
-        /**
-         * Fetch the Documents from FireStore database
-         */
-        mDocRef.collection("donors")
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        for (document in task.result) {
-                            val donor = Donor(
-                                    Id = document.get("id").toString(),
-                                    DonorName = document.get("donorName").toString(),
-                                    MobileNo = document.get("mobileNo").toString(),
-                                    Area = document.get("area").toString(),
-                                    BloodGroup = document.get("bloodGroup").toString(),
-                                    LastDonationDate = document.get("lastDonationDate").toString(),
-                                    Email = document.get("email").toString(),
-                                    TotalDonation = document.get("totalDonation").toString().toInt()
-                            )
-                            donors?.add(donor)
-                        }
-                        initializeRecyclerView(donors!!)
-                    } else {
-                        Log.w("Search Activity", "Error getting documents.", task.exception)
-                    }
-                }
+        getAllDonors()
+
+        swipeContainer.setOnRefreshListener {
+            getAllDonors()
+        }
 
         /**
          * Search option selection changed event
@@ -89,6 +69,36 @@ class SearchActivity : AppCompatActivity() {
         etSearchText.onEditTextChanged { searchText ->
             searchDonors(searchText)
         }
+    }
+
+    private fun getAllDonors() {
+        /**
+         * Fetch the Documents from FireStore database
+         */
+        mDocRef.collection("donors")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        donors?.clear()
+                        for (document in task.result) {
+                            val donor = Donor(
+                                    Id = document.get("id").toString(),
+                                    DonorName = document.get("donorName").toString(),
+                                    MobileNo = document.get("mobileNo").toString(),
+                                    Area = document.get("area").toString(),
+                                    BloodGroup = document.get("bloodGroup").toString(),
+                                    LastDonationDate = document.get("lastDonationDate").toString(),
+                                    Email = document.get("email").toString(),
+                                    TotalDonation = document.get("totalDonation").toString().toInt()
+                            )
+                            donors?.add(donor)
+                        }
+                        initializeRecyclerView(donors!!)
+                    } else {
+                        Log.w("Search Activity", "Error getting documents.", task.exception)
+                    }
+                    swipeContainer.isRefreshing = false
+                }
     }
 
     /**
@@ -147,7 +157,7 @@ class SearchActivity : AppCompatActivity() {
     private fun initializeRecyclerView(donors: ArrayList<Donor>) {
         val donorAdapter = DonorAdapter(this@SearchActivity, donors)
         rv_donor.adapter = donorAdapter
-        rv_donor.layoutManager = LinearLayoutManager(this)
+        rv_donor.layoutManager = LinearLayoutManager(this@SearchActivity)
     }
 }
 

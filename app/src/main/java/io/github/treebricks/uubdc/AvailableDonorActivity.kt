@@ -31,6 +31,24 @@ class AvailableDonorActivity : AppCompatActivity() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         dayDifference = Integer.parseInt(prefs.getString("donation_frequency", "80"))
 
+        getAllDonors()
+
+        swipeContainer.setOnRefreshListener {
+            getAllDonors()
+        }
+
+        sGroupSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, item: View, position: Int, id: Long) {
+                searchDonors(sGroupSelection.selectedItem.toString())
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>) {
+                initializeRecyclerView(donors!!)
+            }
+        }
+    }
+
+    private fun getAllDonors() {
         /**
          * Fetch the Documents from FireStore database
          */
@@ -38,44 +56,41 @@ class AvailableDonorActivity : AppCompatActivity() {
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        for (document in task.result) {
-                            val donor = Donor(
-                                    Id = document.get("id").toString(),
-                                    DonorName = document.get("donorName").toString(),
-                                    MobileNo = document.get("mobileNo").toString(),
-                                    Area = document.get("area").toString(),
-                                    BloodGroup = document.get("bloodGroup").toString(),
-                                    LastDonationDate = document.get("lastDonationDate").toString(),
-                                    Email = document.get("email").toString(),
-                                    TotalDonation = document.get("totalDonation").toString().toInt()
-                            )
-                            donors?.add(donor)
-                        }
+                        donors?.clear()
+                        task.result
+                                .map {
+                                    Donor(
+                                            Id = it.get("id").toString(),
+                                            DonorName = it.get("donorName").toString(),
+                                            MobileNo = it.get("mobileNo").toString(),
+                                            Area = it.get("area").toString(),
+                                            BloodGroup = it.get("bloodGroup").toString(),
+                                            LastDonationDate = it.get("lastDonationDate").toString(),
+                                            Email = it.get("email").toString(),
+                                            TotalDonation = it.get("totalDonation").toString().toInt()
+                                    )
+                                }
+                                .forEach {
+                                    donors?.add(it)
+                                }
                         searchDonors(sGroupSelection.selectedItem.toString())
                     } else {
                         Log.w("Search Activity", "Error getting documents.", task.exception)
                     }
+                    swipeContainer.isRefreshing = false
                 }
-
-        sGroupSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, item: View, position: Int, id: Long) {
-                searchDonors(sGroupSelection.selectedItem.toString())
-            }
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-                initializeRecyclerView(donors!!)
-            }
-        }
     }
 
     private fun searchDonors(searchText: String) {
         val filteredDonor = ArrayList<Donor>()
 
         donors!!.forEach { donor ->
-            if( donationDateDifference(donor.LastDonationDate!!) > dayDifference && donor.BloodGroup == searchText)
+            if (donationDateDifference(donor.LastDonationDate!!) > dayDifference && donor.BloodGroup == searchText)
                 filteredDonor.add(donor)
         }
         initializeRecyclerView(filteredDonor)
     }
+
     private fun donationDateDifference(lastDonationDate: String): Long {
 
         val calendar = Calendar.getInstance()

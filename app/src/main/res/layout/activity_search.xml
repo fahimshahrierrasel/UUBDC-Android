@@ -31,7 +31,7 @@
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/rv_donor"
+        app:layout_constraintBottom_toTopOf="@+id/swipeContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarSrch" />
 
@@ -45,19 +45,25 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/search_options"
-        app:layout_constraintBottom_toTopOf="@+id/rv_donor"
+        app:layout_constraintBottom_toTopOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/etSearchText"
         app:layout_constraintTop_toBottomOf="@+id/toolbarSrch" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_donor"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSearchText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_donor"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>
