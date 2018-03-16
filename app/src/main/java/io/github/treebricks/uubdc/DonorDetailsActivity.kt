@@ -1,24 +1,23 @@
 package io.github.treebricks.uubdc
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ramotion.circlemenu.CircleMenuView
 import io.github.treebricks.uubdc.Models.Donor
 import kotlinx.android.synthetic.main.activity_donor_details.*
 import kotlinx.android.synthetic.main.content_donor_details.*
-import android.support.v4.app.ActivityCompat
-import android.content.pm.PackageManager
-import android.widget.Toast
-import android.preference.PreferenceManager
-import com.afollestad.materialdialogs.MaterialDialog
-import android.text.InputType
-
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DonorDetailsActivity : AppCompatActivity() {
@@ -28,6 +27,7 @@ class DonorDetailsActivity : AppCompatActivity() {
     private val donorsRef = mDocRef.collection("donors")
     private var donor: Donor? = null
     private var message: String = " "
+    private var documentId: String? = null
 
     companion object {
         val CALL_REQUEST_CODE: Int = 1
@@ -55,6 +55,7 @@ class DonorDetailsActivity : AppCompatActivity() {
         query.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (document in task.result) {
+                    documentId = document.id
 
                     donor = Donor(
                             Id = document.get("id").toString(),
@@ -79,6 +80,13 @@ class DonorDetailsActivity : AppCompatActivity() {
             }
         }
 
+        val dateFormat = "dd-MM-yyyy"
+        // Date Format
+        val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
+        // Set Current Date
+        val currentDate = System.currentTimeMillis()
+        val dateString = simpleDateFormat.format(currentDate)
+
         circle_menu.eventListener=object : CircleMenuView.EventListener(){
             override fun onButtonClickAnimationEnd(view: CircleMenuView, buttonIndex: Int) {
                 when(buttonIndex)
@@ -88,8 +96,24 @@ class DonorDetailsActivity : AppCompatActivity() {
                                 .title("New Donation Date")
                                 .content("New donation date for the donor. (dd-mm-yyyy)")
                                 .inputType(InputType.TYPE_CLASS_DATETIME)
-                                .input("Donation Date", "", { dialog, input ->
-                                    // Do something
+                                .input("Donation Date", dateString, { dialog, input ->
+                                    donorsRef.document(documentId!!)
+                                            .set(Donor(
+                                                    Id = donor!!.Id,
+                                                    DonorName = donor!!.DonorName,
+                                                    MobileNo = donor!!.MobileNo,
+                                                    Area = donor!!.Area,
+                                                    BloodGroup = donor!!.BloodGroup,
+                                                    LastDonationDate = input.toString(),
+                                                    Email = donor!!.Email,
+                                                    TotalDonation = donor!!.TotalDonation + 1
+                                            ))
+                                            .addOnSuccessListener {
+                                                Toast.makeText(this@DonorDetailsActivity, "Donation Add :)", Toast.LENGTH_SHORT).show()
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(this@DonorDetailsActivity, "Donation Failed!!!", Toast.LENGTH_SHORT).show()
+                                            }
                                 }).show()
                     }
                     // Call
