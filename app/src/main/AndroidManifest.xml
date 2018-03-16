@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.treebricks.uubdc">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,7 +41,6 @@
         <activity
             android:name=".DonorDetailsActivity"
             android:configChanges="orientation"
-            android:label="@string/title_activity_donor_details"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity

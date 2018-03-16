@@ -9,9 +9,74 @@
     tools:context="io.github.treebricks.uubdc.DonorDetailsActivity"
     tools:showIn="@layout/activity_donor_details">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rvDonation"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/donor_name"
+        android:textSize="18sp"
+        android:id="@+id/tvDonorName" />
+    <TextView
+        android:id="@+id/tvBloodGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvDonorName"
+        android:layout_below="@+id/tvDonorName"
+        android:text="@string/blood_group" />
+
+    <TextView
+        android:id="@+id/tvMobileNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvBloodGroup"
+        android:layout_below="@+id/tvBloodGroup"
+        android:text="@string/mobile_no" />
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvBloodGroup"
+        android:layout_below="@+id/tvMobileNo"
+        android:text="@string/email" />
+
+    <TextView
+        android:id="@+id/tvArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvMobileNo"
+        android:layout_below="@+id/tvEmail"
+        android:text="@string/area" />
+
+    <TextView
+        android:id="@+id/tvLastDonationDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvArea"
+        android:layout_below="@+id/tvArea"
+        android:text="@string/last_donation_date" />
+    <TextView
+        android:id="@+id/tvTotalDonation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvArea"
+        android:layout_below="@+id/tvLastDonationDate"
+        android:text="@string/total_donation" />
+
+    <com.ramotion.circlemenu.CircleMenuView
+        android:id="@+id/circle_menu"
+        android:layout_below="@id/tvMobileNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:button_colors="@array/colors"
+        app:button_icons="@array/icons"
+        app:icon_color="@color/colorAccent"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
