@@ -9,10 +9,16 @@ import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.builders.footer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
+import com.eggheadgames.aboutbox.AboutConfig
+import com.eggheadgames.aboutbox.activity.AboutActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import io.github.treebricks.uubdc.Models.Donor
 import io.github.treebricks.uubdc.adapters.DonorAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import com.eggheadgames.aboutbox.IAnalytic
+import com.eggheadgames.aboutbox.IDialog
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -65,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 primaryItem("About") {
                     icon = R.drawable.ic_info_outline_black_24dp
                     onClick { _ ->
-
+                        startAboutActivity()
                         false
                     }
                 }
@@ -113,5 +119,32 @@ class MainActivity : AppCompatActivity() {
         val donorAdapter = DonorAdapter(this@MainActivity, donors)
         rvAllDonors.adapter = donorAdapter
         rvAllDonors.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun startAboutActivity()
+    {
+        val aboutConfig = AboutConfig.getInstance()
+        aboutConfig.appName = getString(R.string.app_name)
+        aboutConfig.appIcon = R.mipmap.ic_launcher
+        aboutConfig.version = BuildConfig.VERSION_NAME
+
+        aboutConfig.aboutLabelTitle = "Uttara University Blood Donation Club Donor Management Application"
+        aboutConfig.packageName = applicationContext.packageName
+        aboutConfig.buildType = AboutConfig.BuildType.GOOGLE
+
+        aboutConfig.webHomePage = "https://treebricks.github.io/"
+
+        // app publisher for "Try Other Apps" item
+        aboutConfig.appPublisher = "treebricks"
+
+
+        // Contact Support email details
+        aboutConfig.emailAddress = "fahimshahrier2@gmail.com"
+        aboutConfig.emailSubject = "UUBDC App"
+
+        aboutConfig.privacyHtmlPath="https://treebricks.github.io/privacy_policy.html"
+        aboutConfig.acknowledgmentHtmlPath = "https://treebricks.github.io/terms_condition.html"
+
+        AboutActivity.launch(this)
     }
 }
