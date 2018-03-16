@@ -14,6 +14,7 @@ import io.github.treebricks.uubdc.Models.Donor
 import io.github.treebricks.uubdc.adapters.DonorAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView.OnItemSelectedListener
+import com.afollestad.materialdialogs.MaterialDialog
 
 /**
  * Enumeration Class for the search selection option
@@ -31,6 +32,8 @@ class SearchActivity : AppCompatActivity() {
     private var donors: ArrayList<Donor>? = null
     private var searchOption = SearchOption.GROUP
 
+    private var dialog: MaterialDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -38,7 +41,10 @@ class SearchActivity : AppCompatActivity() {
 
         donors = ArrayList()
 
+        showWaitDialog()
+
         getAllDonors()
+
 
         swipeContainer.setOnRefreshListener {
             getAllDonors()
@@ -80,25 +86,40 @@ class SearchActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         donors?.clear()
-                        for (document in task.result) {
-                            val donor = Donor(
-                                    Id = document.get("id").toString(),
-                                    DonorName = document.get("donorName").toString(),
-                                    MobileNo = document.get("mobileNo").toString(),
-                                    Area = document.get("area").toString(),
-                                    BloodGroup = document.get("bloodGroup").toString(),
-                                    LastDonationDate = document.get("lastDonationDate").toString(),
-                                    Email = document.get("email").toString(),
-                                    TotalDonation = document.get("totalDonation").toString().toInt()
-                            )
-                            donors?.add(donor)
-                        }
+                        task.result.map {
+                                    Donor(
+                                            Id = it.get("id").toString(),
+                                            DonorName = it.get("donorName").toString(),
+                                            MobileNo = it.get("mobileNo").toString(),
+                                            Area = it.get("area").toString(),
+                                            BloodGroup = it.get("bloodGroup").toString(),
+                                            LastDonationDate = it.get("lastDonationDate").toString(),
+                                            Email = it.get("email").toString(),
+                                            TotalDonation = it.get("totalDonation").toString().toInt()
+                                    )
+                                }
+                                .forEach {
+                                    donors?.add(it)
+                                }
                         initializeRecyclerView(donors!!)
                     } else {
                         Log.w("Search Activity", "Error getting documents.", task.exception)
                     }
                     swipeContainer.isRefreshing = false
+                    dialog?.dismiss()
+                    dialog?.cancel()
+                    dialog = null
                 }
+    }
+
+    private fun showWaitDialog()
+    {
+        dialog = MaterialDialog.Builder(this@SearchActivity)
+                .title("Please Wait...")
+                .progress(true, 0)
+                .progressIndeterminateStyle(true)
+                .cancelable(false)
+                .show()
     }
 
     /**

@@ -4,7 +4,7 @@
         android:icon="@drawable/ic_refresh_black_24dp"
         android:key="donation_frequency"
         android:title="Donation Frequency"
-        android:summary="Day difference between two donation"
+        android:summary="Day difference between two donation for finding who is available for next donation"
         android:defaultValue="80"
         android:dialogTitle="Donation Frequency" />
 </PreferenceScreen>

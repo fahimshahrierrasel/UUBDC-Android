@@ -5,20 +5,21 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestore
 import io.github.treebricks.uubdc.Models.Donor
-import kotlin.collections.ArrayList
 
 
 class RegistrationActivity : AppCompatActivity() {
 
     // Access a Cloud Firestore instance from your Activity
-    var db = FirebaseFirestore.getInstance()
+    private var db = FirebaseFirestore.getInstance()
 
-    val TAG = RegistrationActivity::javaClass.name
+    private val tag = RegistrationActivity::javaClass.name
+    private var dialog: MaterialDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,9 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
         bRegister.setOnClickListener { _ ->
+
+            showWaitDialog()
+
             val donorName = etDonorName.text.toString()
             val donorEmail = etDonorEmail.text.toString()
             val donorMobile = etMobileNo.text.toString()
@@ -65,38 +69,52 @@ class RegistrationActivity : AppCompatActivity() {
 
             var validationFlag = true
 
-            if(donorName.isEmpty()){
+            if (donorName.isEmpty()) {
                 etDonorName.error = "Donor name is required"
                 validationFlag = false
             }
-            if(donorMobile.isEmpty()){
+            if (donorMobile.isEmpty()) {
                 etMobileNo.error = "Mobile no is required"
                 validationFlag = false
             }
-            if(area.isEmpty()) {
+            if (area.isEmpty()) {
                 etArea.error = "Area is required"
                 validationFlag = false
             }
 
-            if(validationFlag)
-            {
+            if (validationFlag) {
 
                 val newDonor = Donor(UUID.randomUUID().toString(), donorName, donorEmail, donorMobile, bloodGroup, area,
                         lastDonationDate, 1)
 
                 db.collection("donors")
                         .add(newDonor)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "Document Snapshot add with ID: " + documentReference.id)
+                        .addOnSuccessListener { _ ->
                             Toast.makeText(this@RegistrationActivity, "Donor registration successfully!", Toast.LENGTH_SHORT).show()
+                            dialog?.dismiss()
+                            dialog?.cancel()
+                            dialog = null
                             finish()
                         }.addOnFailureListener { exception ->
-                            Log.w(TAG, "Error adding Document: ", exception)
+                            dialog?.dismiss()
+                            dialog?.cancel()
+                            dialog = null
+
+                            Log.w(tag, "Error adding Document: ", exception)
                             Toast.makeText(this@RegistrationActivity, "Donor registration failed!", Toast.LENGTH_SHORT).show()
-                        }
+                }
             }
         }
 
+    }
+
+    private fun showWaitDialog() {
+        dialog = MaterialDialog.Builder(this@RegistrationActivity)
+                .title("Please Wait...")
+                .progress(true, 0)
+                .progressIndeterminateStyle(true)
+                .cancelable(false)
+                .show()
     }
 
 }
