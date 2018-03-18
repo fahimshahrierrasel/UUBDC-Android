@@ -10,8 +10,8 @@ android {
         applicationId "io.github.treebricks.uubdc"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0.1 A New Hope"
+        versionCode 2
+        versionName "1.0.2 A New Hope"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

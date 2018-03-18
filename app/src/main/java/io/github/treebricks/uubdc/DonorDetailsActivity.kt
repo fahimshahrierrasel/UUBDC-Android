@@ -179,15 +179,24 @@ class DonorDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.action_delete -> {
-                donorsRef.document(documentId!!).delete()
-                        .addOnSuccessListener {
-                            Toast.makeText(this@DonorDetailsActivity, "Donor Deleted :(", Toast.LENGTH_SHORT).show()
-                            finish()
-                            startActivity(Intent(this@DonorDetailsActivity, MainActivity::class.java))
+                MaterialDialog.Builder(this@DonorDetailsActivity)
+                        .title("Are you sure?")
+                        .content("Do you want to delete ${donor?.DonorName}?")
+                        .positiveText("Yes, Delete")
+                        .negativeText("No, Are you kidding?")
+                        .onPositive { _, _ ->
+                            donorsRef.document(documentId!!).delete()
+                                    .addOnSuccessListener {
+                                        Toast.makeText(this@DonorDetailsActivity, "Donor Deleted :(", Toast.LENGTH_SHORT).show()
+                                        finish()
+                                        startActivity(Intent(this@DonorDetailsActivity, MainActivity::class.java))
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(this@DonorDetailsActivity, "Donor deletion failed :(", Toast.LENGTH_SHORT).show()
+                                    }
                         }
-                        .addOnFailureListener {
-                            Toast.makeText(this@DonorDetailsActivity, "Donor deletion failed :(", Toast.LENGTH_SHORT).show()
-                        }
+                        .show()
+
                 true
             }
             R.id.action_edit -> {
